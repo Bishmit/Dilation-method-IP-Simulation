@@ -5,7 +5,27 @@ Game::Game()
     window(sf::VideoMode(520, 300), "Dilation"),
     check(false),
     dilatedGrid(8, std::vector<int>(8, 0)),
-    igrid(3, 3, 40) {}
+    igrid(3, 3, 40) {
+    if (!font.loadFromFile("arial.ttf")) {
+        std::cerr << "Failed to load font!" << std::endl;
+    }
+
+    if (!font2.loadFromFile("arial.ttf")) {
+        std::cerr << "Failed to load font!" << std::endl;
+    }
+
+    text.setFont(font);
+    text.setString(" To select Grid = Mouse Leftclick");
+    text.setCharacterSize(14);
+    text.setFillColor(sf::Color::Black);
+    text.setPosition(300.f, 5.f);
+
+    text2.setFont(font2);
+    text2.setString(" To do Dilation = Enter");
+    text2.setCharacterSize(14);
+    text2.setFillColor(sf::Color::Black);
+    text2.setPosition(300.f, 35.f);
+    }
 
 void Game::run() {
     while (window.isOpen()) {
@@ -100,6 +120,9 @@ void Game::render() {
     if (check==true) {
         grid.finalrender(window, dilatedGrid); 
     }
+
+    window.draw(text);
+    window.draw(text2);
 
     window.display();
 }

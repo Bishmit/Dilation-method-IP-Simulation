@@ -21,6 +21,9 @@ private:
 
     sf::RenderWindow window;
     std::vector<std::vector<int>> dilatedGrid;
+
+    sf::Text text, text2; 
+    sf::Font font, font2; 
     
 };
 
