@@ -13,6 +13,10 @@ public:
     void handleClick(const sf::Vector2i& mousePos);
     void render(sf::RenderWindow& window);
     std::vector<std::vector<int>> findGreenBoxIndices();
+    void process(); 
+
+    int getrows(); 
+    int getcols(); 
 
 private:
     int cellSize;

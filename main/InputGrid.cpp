@@ -16,11 +16,11 @@ void InputGrid::handleClick(const sf::Vector2i& mousePos) {
     int cellX = (mousePos.x - offsetX) / cellSize;
     int cellY = (mousePos.y - offsetY) / cellSize;
 
-    std::cout << cellX << " " << cellY << std::endl;
+    //std::cout << cellX << " " << cellY << std::endl;
 
     if (cellX >= 0 && cellX < cols && cellY >= 0 && cellY < rows) {
         if (gridColors[cellY][cellX] == sf::Color::White) {
-            std::cout << "chalexa" << "\n";
+           // std::cout << "chalexa" << "\n";
             gridColors[cellY][cellX] = sf::Color::Green;
         }
         else {
@@ -48,12 +48,35 @@ std::vector<std::vector<int>> InputGrid::findGreenBoxIndices() {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             if (gridColors[i][j] == sf::Color::Green) {
-                greenIndices[i][j] = 1; 
+                greenIndices[i][j] = 1;
             }
+            else greenIndices[i][j] = 0; 
         }
     }
     return greenIndices;
 }
+
+void InputGrid::process() {
+    auto igd = findGreenBoxIndices(); 
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            std::cout << igd[i][j] << " "; 
+        }
+        std::cout << std::endl; 
+    }
+}
+
+int InputGrid::getrows()
+{
+    return rows;
+}
+
+int InputGrid::getcols()
+{
+    return cols;
+}
+
+
 
 
 

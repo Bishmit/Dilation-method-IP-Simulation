@@ -12,12 +12,16 @@ public:
 
 private:
     void processEvents();
+    void performDilation();
     void update();
     void render();
+    bool check; 
+    Grid grid;
+    InputGrid igrid;
 
     sf::RenderWindow window;
-    Grid grid;
-    InputGrid igrid; 
+    std::vector<std::vector<int>> dilatedGrid;
+    
 };
 
 #endif // GAME_H
