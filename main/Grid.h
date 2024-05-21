@@ -13,7 +13,9 @@ public:
     void handleClick(const sf::Vector2i& mousePos);
     void render(sf::RenderWindow& window);
 
-    void finalrender(sf::RenderWindow& window, std::vector<std::vector<int>>& dilatedGrid);
+    void finalDilationrender(sf::RenderWindow& window, std::vector<std::vector<int>>& dilatedGrid);
+
+    void finalErosionrender(sf::RenderWindow& window, std::vector<std::vector<int>>& dilatedGrid);
 
     std::vector<std::vector<int>> findGreenBoxIndices();
     bool isCellGreen(int row, int col) const;

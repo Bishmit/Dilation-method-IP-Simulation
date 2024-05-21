@@ -13,14 +13,15 @@ public:
 private:
     void processEvents();
     void performDilation();
+    void performErosion();
     void update();
     void render();
-    bool check; 
+    bool checkDilation, checkErosion; 
     Grid grid;
     InputGrid igrid;
 
     sf::RenderWindow window;
-    std::vector<std::vector<int>> dilatedGrid;
+    std::vector<std::vector<int>> tempGrid;
 
     sf::Text text, text2; 
     sf::Font font, font2; 
