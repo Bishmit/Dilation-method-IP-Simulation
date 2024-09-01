@@ -2,8 +2,8 @@
 
 Grid::Grid(int rows, int cols, int cellSize)
     : cellSize(37),
-    rows(8),
-    cols(8),
+    rows(rows),
+    cols(cols),
     check(false),
     gridColors(rows, std::vector<sf::Color>(cols, sf::Color::White)),
     originalGrid(rows, std::vector<int>(cols, 0)) {}
@@ -12,7 +12,7 @@ Grid::Grid(int rows, int cols, int cellSize)
 void Grid::handleClick(const sf::Vector2i& mousePos) {
     int cellX = mousePos.x / cellSize;
     int cellY = mousePos.y / cellSize;
-   
+    
     if (cellX >= 0 && cellX < cols && cellY >= 0 && cellY < rows) {
         if (gridColors[cellY][cellX] == sf::Color::White) {
             gridColors[cellY][cellX] = sf::Color::Green;

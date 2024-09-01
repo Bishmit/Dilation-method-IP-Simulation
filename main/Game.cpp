@@ -1,11 +1,11 @@
 #include "Game.h"
 
-Game::Game()
-    : grid(8, 8, 37), // Initialize grid before tempGrid
+Game::Game(int mrow,int mcol, int irow, int icol)
+    : grid(mrow, mcol, 37), // Initialize grid before tempGrid
     window(sf::VideoMode(520, 300), "Dilation"),
     checkDilation(false), checkErosion(false),
-    tempGrid(8, std::vector<int>(8, 0)),
-    igrid(3, 3, 40) {
+    tempGrid(mrow, std::vector<int>(mcol, 0)),
+    igrid(irow, icol, 40), mousePressed(true), mrow(mrow), mcol(mcol), irow(irow), icol(icol) {
     if (!font.loadFromFile("arial.ttf")) {
         std::cerr << "Failed to load font!" << std::endl;
     }
@@ -43,12 +43,14 @@ void Game::processEvents() {
 
         if (event.type == sf::Event::MouseButtonPressed) {
             if (event.mouseButton.button == sf::Mouse::Left) {
+                mousePressed = true; 
                 // Get the mouse position
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 grid.handleClick(mousePos);
                 igrid.handleClick(mousePos);
             }
         }
+        
 
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::D) {
@@ -77,25 +79,26 @@ void Game::performDilation() {
 
     std::cout << "\n";
 
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
+    // Initialize tempGrid with the original grid
+    for (int i = 0; i < mrow; i++) {
+        for (int j = 0; j < mcol; j++) {
             tempGrid[i][j] = gd[i][j];
             std::cout << tempGrid[i][j] << " ";
         }
         std::cout << "\n";
     }
 
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
+    // Perform dilation
+    for (int i = 0; i < mrow; i++) {
+        for (int j = 0; j < mcol; j++) {
             if (gd[i][j] == 1) {
-                for (int ki = 0; ki < 3; ki++) {
-                    for (int kj = 0; kj < 3; kj++) {
-                        int pi = i + ki - 1;
-                        int pj = j + kj - 1;
+                for (int ki = 0; ki < irow; ki++) {
+                    for (int kj = 0; kj < icol; kj++) {
+                        int pi = i + ki - irow / 2;
+                        int pj = j + kj - icol / 2;
 
                         // Check if pi and pj are within bounds
-                        if (pi >= 0 && pj >= 0 && pi < 8 && pj < 8) {
-                            // Only apply dilation if igd[ki][kj] is 1
+                        if (pi >= 0 && pj >= 0 && pi < mrow && pj < mcol) {
                             if (igd[ki][kj] == 1) {
                                 tempGrid[pi][pj] = 1;
                             }
@@ -105,9 +108,11 @@ void Game::performDilation() {
             }
         }
     }
+
+    // Debug print of the dilated grid
     std::cout << std::endl;
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
+    for (int i = 0; i < mrow; i++) {
+        for (int j = 0; j < mcol; j++) {
             std::cout << tempGrid[i][j] << " ";
         }
         std::cout << "\n";
@@ -120,26 +125,26 @@ void Game::performErosion() {
 
     std::cout << "\n";
 
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
+    for (int i = 0; i < mrow; i++) {
+        for (int j = 0; j < mcol; j++) {
             tempGrid[i][j] = gd[i][j]; // Initialize tempGrid with the original grid
             std::cout << tempGrid[i][j] << " ";
         }
         std::cout << "\n";
     }
 
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
+    for (int i = 0; i < mrow; i++) {
+        for (int j = 0; j < mcol; j++) {
             if (gd[i][j] == 1) {
                 bool shouldErode = true;
 
-                for (int ki = 0; ki < 3 && shouldErode; ki++) {
-                    for (int kj = 0; kj < 3; kj++) {
+                for (int ki = 0; ki < irow && shouldErode; ki++) {
+                    for (int kj = 0; kj < icol; kj++) {
                         int pi = i + ki - 1;
                         int pj = j + kj - 1;
 
                         // Check if pi and pj are within bounds
-                        if (pi >= 0 && pj >= 0 && pi < 8 && pj < 8) {
+                        if (pi >= 0 && pj >= 0 && pi < mrow && pj < mcol) {
                             if (igd[ki][kj] == 1 && gd[pi][pj] == 0) {
                                 shouldErode = false;
                                 break;
@@ -160,8 +165,8 @@ void Game::performErosion() {
     }
 
     std::cout << std::endl;
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
+    for (int i = 0; i < mrow; i++) {
+        for (int j = 0; j < mcol; j++) {
             std::cout << tempGrid[i][j] << " ";
         }
         std::cout << "\n";

@@ -7,10 +7,14 @@
 
 class Game {
 public:
-    Game();
+    Game(int, int, int, int);
     void run();
 
+    // public variable 
+    bool mousePressed; 
+
 private:
+    int mrow, mcol,  irow,  icol; 
     void processEvents();
     void performDilation();
     void performErosion();
