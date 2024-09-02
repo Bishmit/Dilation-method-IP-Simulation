@@ -38,7 +38,7 @@ void Game::run() {
 void Game::processEvents() {
     sf::Event event;
     while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed)
+        if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             window.close();
 
         if (event.type == sf::Event::MouseButtonPressed) {
@@ -77,15 +77,15 @@ void Game::performDilation() {
     auto igd = igrid.findGreenBoxIndices();
     auto gd = grid.findGreenBoxIndices();
 
-    std::cout << "\n";
+   // std::cout << "\n";
 
     // Initialize tempGrid with the original grid
     for (int i = 0; i < mrow; i++) {
         for (int j = 0; j < mcol; j++) {
             tempGrid[i][j] = gd[i][j];
-            std::cout << tempGrid[i][j] << " ";
+            //std::cout << tempGrid[i][j] << " ";
         }
-        std::cout << "\n";
+        //std::cout << "\n";
     }
 
     // Perform dilation
@@ -110,27 +110,27 @@ void Game::performDilation() {
     }
 
     // Debug print of the dilated grid
-    std::cout << std::endl;
+   /* std::cout << std::endl;
     for (int i = 0; i < mrow; i++) {
         for (int j = 0; j < mcol; j++) {
             std::cout << tempGrid[i][j] << " ";
         }
         std::cout << "\n";
-    }
+    } */
 }
 
 void Game::performErosion() {
     auto igd = igrid.findGreenBoxIndices(); // Structuring element
     auto gd = grid.findGreenBoxIndices();   // Original grid
 
-    std::cout << "\n";
+    //std::cout << "\n";
 
     for (int i = 0; i < mrow; i++) {
         for (int j = 0; j < mcol; j++) {
             tempGrid[i][j] = gd[i][j]; // Initialize tempGrid with the original grid
-            std::cout << tempGrid[i][j] << " ";
+            //std::cout << tempGrid[i][j] << " ";
         }
-        std::cout << "\n";
+        //std::cout << "\n";
     }
 
     for (int i = 0; i < mrow; i++) {
@@ -164,13 +164,16 @@ void Game::performErosion() {
         }
     }
 
-    std::cout << std::endl;
+   /*
+   // debugging eroded grid 
+   std::cout << std::endl;
     for (int i = 0; i < mrow; i++) {
         for (int j = 0; j < mcol; j++) {
             std::cout << tempGrid[i][j] << " ";
         }
         std::cout << "\n";
     }
+    */
 }
 
 void Game::render() {

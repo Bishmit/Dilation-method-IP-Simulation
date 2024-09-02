@@ -15,7 +15,7 @@ public:
 
     void finalDilationrender(sf::RenderWindow& window, std::vector<std::vector<int>>& dilatedGrid);
 
-    void finalErosionrender(sf::RenderWindow& window, std::vector<std::vector<int>>& dilatedGrid);
+    void finalErosionrender(sf::RenderWindow& window, std::vector<std::vector<int>>& ErrosionGrid);
 
     std::vector<std::vector<int>> findGreenBoxIndices();
     bool isCellGreen(int row, int col) const;

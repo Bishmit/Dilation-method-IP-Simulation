@@ -46,20 +46,20 @@ void Grid::finalDilationrender(sf::RenderWindow& window, std::vector<std::vector
         for (int j = 0; j < cols; ++j) {
             cell.setPosition(j * cellSize, i * cellSize);
             if (dilatedGrid[i][j] == 1) {
-                cell.setFillColor(sf::Color::Yellow); 
+                cell.setFillColor(sf::Color::Yellow);
                 auto temp = findGreenBoxIndices();
                 if (temp[i][j] == 1) {
                     cell.setFillColor(sf::Color::Green);
                 }
                 window.draw(cell);
-            }  
-           
+            }
+
         }
-       
+
     }
 }
 
-void Grid::finalErosionrender(sf::RenderWindow& window, std::vector<std::vector<int>>& dilatedGrid) {
+void Grid::finalErosionrender(sf::RenderWindow& window, std::vector<std::vector<int>>& ErossionGrid) {
     sf::RectangleShape cell(sf::Vector2f(cellSize - 1, cellSize - 1));
     cell.setOutlineThickness(1);
     cell.setOutlineColor(sf::Color::Black);
@@ -67,7 +67,7 @@ void Grid::finalErosionrender(sf::RenderWindow& window, std::vector<std::vector<
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             cell.setPosition(j * cellSize, i * cellSize);
-            if (dilatedGrid[i][j] == 1) {
+            if (ErossionGrid[i][j] == 1) {
                 cell.setFillColor(sf::Color::Green);
                 auto temp = findGreenBoxIndices();
                 if (temp[i][j] == 1) {
